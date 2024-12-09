@@ -1,10 +1,11 @@
 import React from 'react'
 
-const GuessResults = () => {
+const GuessResults = ({ guesses }) => {
   return (
     <div className="guess-results">
-      <p className="guess">FIRST</p>
-      <p className="guess">GUESS</p>
+      {guesses.map((guess, index) => (
+        <p key={index} className="guess">{guess}</p>
+      ))}
     </div>
   )
 }
