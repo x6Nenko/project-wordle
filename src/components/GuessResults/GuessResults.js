@@ -6,8 +6,8 @@ import { NUM_OF_GUESSES_ALLOWED } from '../../constants'
 const GuessResults = ({ guesses }) => {
   return (
     <div className="guess-results">
-      {range(NUM_OF_GUESSES_ALLOWED).map((num, index) => (
-        <Guess key={index} newGuess={guesses[index] || ''} />
+      {range(NUM_OF_GUESSES_ALLOWED).map((num) => (
+        <Guess key={num} value={guesses[num]} />
       ))}
     </div>
   )

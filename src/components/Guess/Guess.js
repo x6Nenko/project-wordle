@@ -1,18 +1,14 @@
 import React from 'react'
 import { range } from '../../utils'
 
-const Guess = ({ newGuess }) => {
+const Guess = ({ value }) => {
   return (
     <p className="guess">
-      {newGuess === "" ? (
-        range(5).map((i) => (
-          <span key={i} className="cell"></span>
-        ))
-      ) : (
-        newGuess.split('').map((letter, i) => (
-          <span key={i} className="cell">{letter}</span>
-        ))
-      )}
+      {range(5).map((num) => (
+        <span key={num} className="cell">
+          {value ? value[num] : undefined}
+        </span>
+      ))}
     </p>
   )
 }
