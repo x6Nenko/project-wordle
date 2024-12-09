@@ -2,7 +2,6 @@ import React from 'react';
 
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
-import { checkGuess } from '../../game-helpers';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 
 import GuessInput from '../GuessInput';
@@ -16,31 +15,27 @@ console.info({ answer });
 
 function Game() {
   const [guesses, setGuesses] = React.useState([]);
-  const [gameResult, setGameResult] = React.useState('running');
+  const [gameStatus, setGameStatus] = React.useState('running');
   // won, lost, running
 
-  function handleSubmitGuess(newGuess) {
-    const checkedGuess = checkGuess(newGuess, answer);
-    const isWinner = checkedGuess.every(
-      (result) => result.status === 'correct'
-    );
-    
-    if (isWinner) {
-      setGameResult('won');
-    }
-    
-    setGuesses([...guesses, newGuess]);
+  function handleSubmitGuess(newGuess) {    
+    const nextGuesses = [...guesses, newGuess];
+    setGuesses(nextGuesses);
 
-    if ((guesses.length + 1) >= NUM_OF_GUESSES_ALLOWED) {
-      setGameResult('lost');
+    if (newGuess === answer) {
+      setGameStatus('won');
+    }
+
+    if (nextGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
+      setGameStatus('lost');
     }
   }
 
   return (
     <>
       <GuessResults guesses={guesses} answer={answer} />
-      <GuessInput handleSubmitGuess={handleSubmitGuess} isDisabled={gameResult !== 'running'} />
-      {gameResult !== 'running' && <Banner result={gameResult} triesAmount={guesses.length} answer={answer} />}
+      <GuessInput handleSubmitGuess={handleSubmitGuess} isDisabled={gameStatus !== 'running'} />
+      {gameStatus !== 'running' && <Banner result={gameStatus} triesAmount={guesses.length} answer={answer} />}
     </>
   );
 }
